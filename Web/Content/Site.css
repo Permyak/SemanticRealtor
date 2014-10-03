@@ -6,6 +6,12 @@ header, footer, nav, section {
     display: block;
 }
 
+#viewport {
+    margin: 0px auto; 
+    border: solid 1px #999; 
+    display:block;
+}
+
 
 /* Styles for basic forms
 -----------------------------------------------------------*/

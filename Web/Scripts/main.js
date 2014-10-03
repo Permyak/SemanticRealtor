@@ -66,6 +66,9 @@
                     var w = 10
                     ctx.fillStyle = (node.data.alone) ? "orange" : "black"
                     ctx.fillRect(pt.x - w / 2, pt.y - w / 2, w, w)
+                    ctx.fillStyle = "black" 
+                    ctx.font = 'italic 13px sans-serif'
+                    ctx.fillText(node.name, pt.x + 8, pt.y + 8)
                 })
             },
 
@@ -130,26 +133,24 @@
         sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
 
         // add some nodes to the graph and watch it go...
-        sys.addEdge('a', 'b')
-        sys.addEdge('a', 'c')
-        sys.addEdge('a', 'd')
-        sys.addEdge('a', 'e')
-        sys.addNode('f', { alone: true, mass: .25 })
+        //sys.addEdge('a', 'b')
+        //sys.addEdge('a', 'c')
+        //sys.addEdge('a', 'd')
+        //sys.addEdge('a', 'e')
+        //sys.addNode('f', { alone: true, mass: .25 })
 
-        // or, equivalently:
-        //
-        // sys.graft({
-        //   nodes:{
-        //     f:{alone:true, mass:.25}
-        //   }, 
-        //   edges:{
-        //     a:{ b:{},
-        //         c:{},
-        //         d:{},
-        //         e:{}
-        //     }
-        //   }
-        // })
+        sys.graft({
+             nodes:{
+             f:{alone:true, mass:.25}
+             },
+             edges:{
+             a:{ b:{},
+             c:{},
+             d:{},
+             e:{}
+             }
+             }
+            })
 
     })
 
