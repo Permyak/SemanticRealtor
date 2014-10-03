@@ -47,7 +47,8 @@ namespace Web
 
             bundles.Add(new ScriptBundle("~/bundles/arborjs").Include(
                 "~/Scripts/arbor.js",
-                "~/Scripts/arbor-tween.js"));
+                "~/Scripts/arbor-tween.js",
+                "~/Scripts/main.js"));
         }
     }
 }

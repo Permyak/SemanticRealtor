@@ -1,7 +1,13 @@
 ﻿@{
     ViewBag.Title = "Main";
 }
-
-    <h2>Hello, world!</h2>
-
+@section scripts {
     @Scripts.Render("~/bundles/arborjs")
+}
+    <div class="container">
+        <h2>Hello, world!</h2>
+
+        <canvas id="viewport" width="800" height="600"></canvas>
+    </div>
+
+    
