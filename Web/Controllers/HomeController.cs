@@ -13,7 +13,7 @@ namespace Web.Controllers
 
         public string Index()
         {
-            return "Semantic Realtor";
+            return "Awesome Semantic Realtor";
         }
 
     }
