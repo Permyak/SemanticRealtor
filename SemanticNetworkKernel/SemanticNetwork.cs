@@ -13,13 +13,18 @@
         public int SemanticNetworkId { get; set; }
 
         /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// Вершины семантической сети.
         /// </summary>
-        public virtual List<Vertex> Vertices { get; set; }
+        public virtual ICollection<Vertex> Vertices { get; set; }
 
         /// <summary>
         /// Дуги семантической сети.
         /// </summary>
-        public virtual List<Arc> Arcs { get; set; } 
+        public virtual ICollection<Arc> Arcs { get; set; } 
     }
 }

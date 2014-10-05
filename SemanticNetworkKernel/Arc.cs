@@ -1,5 +1,7 @@
 ﻿namespace SemanticNetworkKernel
 {
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// Дуга, соединяющая вершины в сем сети.
     /// </summary>
@@ -16,18 +18,34 @@
         public string Text { get; set; }
 
         /// <summary>
+        /// Gets or sets the from vertex id.
+        /// </summary>
+        public int? FromVertexId { get; set; }
+
+        /// <summary>
         /// Начальная вершина дуги.
         /// </summary>
-        public Vertex FromVertex { get; set; }
+        [Required]
+        public virtual Vertex FromVertex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the to vertex id.
+        /// </summary>
+        public int? ToVertexId { get; set; }
 
         /// <summary>
         /// Конечная вершина дуги.
         /// </summary>
-        public Vertex ToVertex { get; set; }
+        public virtual Vertex ToVertex { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the semantic network id.
+        /// </summary>
+        public int SemanticNetworkId { get; set; }
 
         /// <summary>
-        /// Semantic network.
+        /// Gets or sets the semantic network.
         /// </summary>
-        public SemanticNetwork SemanticNetwork { get; set; }
+        public virtual SemanticNetwork SemanticNetwork { get; set; }
     }
 }

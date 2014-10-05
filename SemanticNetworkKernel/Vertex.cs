@@ -1,5 +1,7 @@
 ﻿namespace SemanticNetworkKernel
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Вершина семантической сети.
     /// </summary>
@@ -21,8 +23,23 @@
         public bool IsSystem { get; set; }
 
         /// <summary>
-        /// Semantic network.
+        /// Gets or sets the semantic network id.
         /// </summary>
-        public SemanticNetwork SemanticNetwork { get; set; }
+        public int SemanticNetworkId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the semantic network.
+        /// </summary>
+        public virtual SemanticNetwork SemanticNetwork { get; set; }
+
+        /// <summary>
+        /// Gets or sets the to arcs.
+        /// </summary>
+        public virtual ICollection<Arc> ToArcs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the from arcs.
+        /// </summary>
+        public virtual ICollection<Arc> FromArcs { get; set; }
     }
 }
