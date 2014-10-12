@@ -38,6 +38,17 @@ namespace Web
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrapjs").Include(
+                "~/Scripts/bootstrap.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/bootstrap").Include(
+                "~/Content/bootstrap.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/arborjs").Include(
+                "~/Scripts/arbor.js",
+                "~/Scripts/arbor-tween.js",
+                "~/Scripts/main.js"));
         }
     }
 }

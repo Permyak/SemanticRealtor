@@ -11,9 +11,9 @@ namespace Web.Controllers
         //
         // GET: /Home/
 
-        public string Index()
+        public ActionResult Index()
         {
-            return "Awesome Semantic Realtor";
+            return View();
         }
 
     }
