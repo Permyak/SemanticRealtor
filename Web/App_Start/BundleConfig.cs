@@ -47,10 +47,18 @@ namespace Web
             bundles.Add(new StyleBundle("~/bundles/bootstrap").Include(
                 "~/Content/bootstrap.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/fancybox").Include(
+                "~/Content/jquery.fancybox.css"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/arborjs").Include(
                 "~/Scripts/arbor.js",
                 "~/Scripts/arbor-tween.js",
                 "~/Scripts/main.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/fancyboxjs").Include(
+                "~/Scripts/jquery.fancybox.js",
+                "~/Scripts/jquery.fancybox-pack.js"));
         }
     }
 }

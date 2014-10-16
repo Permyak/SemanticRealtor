@@ -16,6 +16,10 @@ header, footer, nav, section {
     height: 600px;
 }
 
+.container .controls {
+    padding-bottom: 10px;
+}
+
 
 /* Styles for basic forms
 -----------------------------------------------------------*/

@@ -161,3 +161,21 @@ var sys
     })
 
 })(this.jQuery)
+
+var unnamedCnt = 0;
+$("#add_node").click(function () {
+    unnamedCnt++
+    sys.addNode('unnamed' + unnamedCnt)
+});
+
+$("#add_edge").click(function () {
+    $.fancybox({
+        content: $('#add_edge_div'),
+        modal: true
+    });
+});
+
+$("#add_edge_confirm").click(function () {
+    sys.addEdge($("#edge_node_1").val(), $("#edge_node_2").val());
+    $.fancybox.close();
+});

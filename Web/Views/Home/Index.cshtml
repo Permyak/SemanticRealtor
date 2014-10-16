@@ -2,13 +2,42 @@
     ViewBag.Title = "Main";
 }
 @section scripts {
+    @Scripts.Render("~/bundles/fancyboxjs")
     @Scripts.Render("~/bundles/arborjs")
 }
+@section css {
+    @Styles.Render("~/bundles/fancybox")
+}
+
     <div class="container">
         <h2>Семантическая сеть</h2>
+        <div class="container controls">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-md" id="add_node">
+                    <span class="glyphicon glyphicon-plus"></span> Add Node
+                </button>
+                <button type="button" class="btn btn-default btn-md" id="add_edge">
+                    <span class="glyphicon glyphicon-plus"></span> Add Edge
+                </button>
+            </div>
+        </div>
         <div class="contanier arbor">
             <canvas id="viewport"></canvas>
         </div>
     </div>
+
+<div id="add_edge_div" style="display:none">
+    <div>
+        <div class="input-group input-group-md">
+            <input type="text" class="form-control" placeholder="First Node" id="edge_node_1">
+        </div>
+        <div class="input-group input-group-md">
+            <input type="text" class="form-control" placeholder="Second Node" id="edge_node_2">
+        </div>
+        <button type="button" class="btn btn-success btn-md" id="add_edge_confirm">
+            <span class="glyphicon glyphicon-plus"></span> Add Edge
+        </button>
+    </div>
+</div>
 
     
