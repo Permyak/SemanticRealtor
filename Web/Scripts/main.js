@@ -4,11 +4,17 @@
 //  A project template for using arbor.js
 //
 
+var sys
+
 (function ($) {
 
     var Renderer = function (canvas) {
         var canvas = $(canvas).get(0)
+        var c = $(canvas)
+        var parent = $(c).parent();
         var ctx = canvas.getContext("2d");
+        c.attr('width', $(parent).width()); //max width
+        c.attr('height', $(parent).height()); //max height
         var particleSystem
 
         var that = {
@@ -128,7 +134,7 @@
     }
 
     $(document).ready(function () {
-        var sys = arbor.ParticleSystem(1000, 600, 0.5) // create the system with sensible repulsion/stiffness/friction
+        sys = arbor.ParticleSystem(1000, 600, 0.5) // create the system with sensible repulsion/stiffness/friction
         sys.parameters({ gravity: true }) // use center-gravity to make the graph settle nicely (ymmv)
         sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
 

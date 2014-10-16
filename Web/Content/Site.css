@@ -12,6 +12,10 @@ header, footer, nav, section {
     display:block;
 }
 
+.container .arbor {
+    height: 600px;
+}
+
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
