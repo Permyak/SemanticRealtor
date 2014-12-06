@@ -64,7 +64,7 @@ var sys
                     ctx.stroke()
                     if (edge.data.name) {
                         ctx.save()
-                        ctx.translate((pt1.x + pt2.x) / 2 + 5, (pt1.y + pt2.y) / 2 - 5)
+                        ctx.translate((pt1.x + pt2.x) / 2, (pt1.y + pt2.y) / 2)
                         ctx.rotate(Math.atan((pt2.y - pt1.y) / (pt2.x - pt1.x)))
                         ctx.fillStyle = "black"
                         ctx.fillText(edge.data.name, 0, 0)
