@@ -62,6 +62,14 @@ var sys
                     ctx.moveTo(pt1.x, pt1.y)
                     ctx.lineTo(pt2.x, pt2.y)
                     ctx.stroke()
+                    if (edge.data.name) {
+                        ctx.save()
+                        ctx.translate((pt1.x + pt2.x) / 2 + 5, (pt1.y + pt2.y) / 2 - 5)
+                        ctx.rotate(Math.atan((pt2.y - pt1.y) / (pt2.x - pt1.x)))
+                        ctx.fillStyle = "black"
+                        ctx.fillText(edge.data.name, 0, 0)
+                        ctx.restore()
+                    }
                 })
 
                 particleSystem.eachNode(function (node, pt) {
@@ -150,11 +158,15 @@ var sys
              f:{alone:true, mass:.25}
              },
              edges:{
-             a:{ b:{},
-             c:{},
-             d:{},
-             e:{}
-             }
+                 a: {
+                     b: {
+                         name: "#a_part_of"
+                     },
+                     c: {},
+                     d:{},
+                     e: {},
+                     f: {}
+                 }  
              }
             })
 
