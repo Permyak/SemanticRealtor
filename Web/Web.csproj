@@ -152,10 +152,26 @@
     <Content Include="Content\bootstrap.js" />
     <Content Include="Content\bootstrap.min.js" />
     <None Include="Content\jquery-1.9.1.intellisense.js" />
+    <Content Include="Content\fancybox_loading%402x.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fancybox_loading.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fancybox_overlay.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fancybox_sprite%402x.png" />
+    <Content Include="Content\fancybox_sprite.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\jquery-1.9.1.js" />
     <Content Include="Content\jquery-1.9.1.min.js" />
     <Content Include="Content\jquery-ui-1.8.24.js" />
     <Content Include="Content\jquery-ui-1.8.24.min.js" />
+    <Content Include="Content\jquery.fancybox.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\jquery.fancybox.js" />
     <Content Include="Content\jquery.fancybox.pack.js" />
     <Content Include="Content\jquery.unobtrusive-ajax.js" />
