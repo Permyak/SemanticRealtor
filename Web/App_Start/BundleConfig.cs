@@ -47,7 +47,7 @@ namespace Web
             bundles.Add(new StyleBundle("~/bundles/bootstrap").Include(
                 "~/Content/bootstrap.css"));
 
-            bundles.Add(new StyleBundle("~/bundles/fancyboxcss").Include(
+            bundles.Add(new StyleBundle("~/bundles/fancybox").Include(
                 "~/Content/jquery.fancybox.css"
             ));
 
