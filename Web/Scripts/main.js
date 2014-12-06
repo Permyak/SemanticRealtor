@@ -183,11 +183,12 @@ $("#add_node").click(function () {
 $("#add_edge").click(function () {
     $.fancybox({
         content: $('#add_edge_div'),
-        modal: true
+        modal: true,
+        closeBtn: true,
     });
 });
 
 $("#add_edge_confirm").click(function () {
-    sys.addEdge($("#edge_node_1").val(), $("#edge_node_2").val());
+    sys.addEdge($("#edge_node_1").val(), $("#edge_node_2").val(), { name: $("#edge_name").val() });
     $.fancybox.close();
 });

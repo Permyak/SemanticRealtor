@@ -1,4 +1,8 @@
-﻿body {
+﻿html, body {
+    height:100%;
+}
+
+body {
     padding-top: 50px;
 }
 
@@ -13,7 +17,7 @@ header, footer, nav, section {
 }
 
 .container .arbor {
-    height: 600px;
+    height:80%;
 }
 
 .container .controls {
