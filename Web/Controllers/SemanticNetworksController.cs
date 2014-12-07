@@ -15,23 +15,30 @@
                 new SemanticNetwork { Name = "network2" }
             };
 
-            var vertexA = new Vertex { Text = "a" };
+            return list;
+        }
+
+        private SemanticNetwork getNewSemanticNetwork()
+        {
+            var semNet = new SemanticNetwork();
+
+            var vertexA = new Vertex { Text = "a", SemanticNetwork = semNet};
             var vertexB = new Vertex { Text = "b" };
             var vertexC = new Vertex { Text = "c" };
             var vertexD = new Vertex { Text = "d" };
             var vertexE = new Vertex { Text = "e" };
             var vertexF = new Vertex { Text = "f" };
 
-            list[0].Vertices = new Collection<Vertex> { vertexA, vertexB, vertexC, vertexD, vertexE, vertexF };
+            semNet.Vertices = new Collection<Vertex> { vertexA, vertexB, vertexC, vertexD, vertexE, vertexF };
 
-            list[0].Arcs = new Collection<Arc>();
-            list[0].Arcs.Add(new Arc { Text = "edge#1", FromVertex = vertexA, ToVertex = vertexB });
-            list[0].Arcs.Add(new Arc { Text = "edge#2", FromVertex = vertexA, ToVertex = vertexC });
-            list[0].Arcs.Add(new Arc { Text = "edge#3", FromVertex = vertexA, ToVertex = vertexD });
-            list[0].Arcs.Add(new Arc { Text = "edge#4", FromVertex = vertexA, ToVertex = vertexE });
-            list[0].Arcs.Add(new Arc { Text = "edge#5", FromVertex = vertexA, ToVertex = vertexF });
+            semNet.Arcs = new Collection<Arc>();
+            semNet.Arcs.Add(new Arc { Text = "edge#1", FromVertex = vertexA, ToVertex = vertexB });
+            semNet.Arcs.Add(new Arc { Text = "edge#2", FromVertex = vertexA, ToVertex = vertexC });
+            semNet.Arcs.Add(new Arc { Text = "edge#3", FromVertex = vertexA, ToVertex = vertexD });
+            semNet.Arcs.Add(new Arc { Text = "edge#4", FromVertex = vertexA, ToVertex = vertexE });
+            semNet.Arcs.Add(new Arc { Text = "edge#5", FromVertex = vertexA, ToVertex = vertexF });
 
-            return list;
+            return semNet;
         }
 
         // GET api/<controller>
@@ -41,9 +48,9 @@
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public SemanticNetwork Get(int id)
         {
-            return "value";
+            return this.getNewSemanticNetwork();
         }
 
         // POST api/<controller>
