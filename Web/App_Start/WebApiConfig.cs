@@ -18,6 +18,7 @@ namespace Web
                 = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
             config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling
                 = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
         }
     }
 }
