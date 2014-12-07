@@ -1,12 +1,16 @@
 ﻿namespace Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Web.Http;
     using SemanticNetworkKernel;
 
     public class SemanticNetworksController : ApiController
     {
+        private SemanticNetworkContext _context;
+
         private IEnumerable<SemanticNetwork> getNewSemanticNetworks()
         {
             var list = new List<SemanticNetwork>
@@ -44,18 +48,30 @@
         // GET api/<controller>
         public IEnumerable<SemanticNetwork> Get()
         {
-            return getNewSemanticNetworks();
+            return new SemanticNetworkContext().SemanticNetworks;
         }
 
         // GET api/<controller>/5
         public SemanticNetwork Get(int id)
         {
-            return this.getNewSemanticNetwork();
+            return new SemanticNetworkContext().SemanticNetworks.First(x => x.SemanticNetworkId == id);
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        public void Post([FromBody]string name)
         {
+            if (!string.IsNullOrEmpty(name))
+            {
+                var semNetwork = new SemanticNetwork { Name = name };
+                _context = new SemanticNetworkContext();
+                _context.SemanticNetworks.Add(semNetwork);
+                _context.SaveChanges();
+                _context.Dispose();
+            }
+            else
+            {
+                throw new Exception("Пустое имя сем. сети.");
+            }
         }
 
         // PUT api/<controller>/5
