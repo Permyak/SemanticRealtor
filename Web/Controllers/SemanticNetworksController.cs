@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -14,7 +15,7 @@
         // GET api/<controller>
         public IEnumerable<SemanticNetwork> Get()
         {
-            return _context.SemanticNetworks;
+            return _context.SemanticNetworks.ToList();
         }
 
         // GET api/<controller>/5
