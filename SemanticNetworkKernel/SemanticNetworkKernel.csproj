@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VertexView.cs" />
+    <Compile Include="ArcView.cs" />
     <Compile Include="Arc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SemanticNetwork.cs" />
