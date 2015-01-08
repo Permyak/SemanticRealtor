@@ -6,9 +6,9 @@
 
 var sys
 
-(function ($) {
+(function($) {
 
-    var Renderer = function (canvas) {
+    var Renderer = function(canvas) {
         var canvas = $(canvas).get(0)
         var c = $(canvas)
         var parent = $(c).parent();
@@ -18,7 +18,7 @@ var sys
         var particleSystem
 
         var that = {
-            init: function (system) {
+            init: function(system) {
                 //
                 // the particle system will call the init function once, right before the
                 // first frame is to be drawn. it's a good place to set up the canvas and
@@ -37,7 +37,7 @@ var sys
                 that.initMouseHandling()
             },
 
-            redraw: function () {
+            redraw: function() {
                 // 
                 // redraw will be called repeatedly during the run whenever the node positions
                 // change. the new positions for the nodes can be accessed by looking at the
@@ -50,7 +50,7 @@ var sys
                 ctx.fillStyle = "white"
                 ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-                particleSystem.eachEdge(function (edge, pt1, pt2) {
+                particleSystem.eachEdge(function(edge, pt1, pt2) {
                     // edge: {source:Node, target:Node, length:#, data:{}}
                     // pt1:  {x:#, y:#}  source position in screen coords
                     // pt2:  {x:#, y:#}  target position in screen coords
@@ -72,7 +72,7 @@ var sys
                     }
                 })
 
-                particleSystem.eachNode(function (node, pt) {
+                particleSystem.eachNode(function(node, pt) {
                     // node: {mass:#, p:{x,y}, name:"", data:{}}
                     // pt:   {x:#, y:#}  node position in screen coords
 
@@ -80,20 +80,20 @@ var sys
                     var w = 10
                     ctx.fillStyle = (node.data.alone) ? "orange" : "black"
                     ctx.fillRect(pt.x - w / 2, pt.y - w / 2, w, w)
-                    ctx.fillStyle = "black" 
+                    ctx.fillStyle = "black"
                     ctx.font = 'italic 13px sans-serif'
                     ctx.fillText(node.name, pt.x + 8, pt.y + 8)
                 })
             },
 
-            initMouseHandling: function () {
+            initMouseHandling: function() {
                 // no-nonsense drag and drop (thanks springy.js)
                 var dragged = null;
 
                 // set up a handler object that will initially listen for mousedowns then
                 // for moves and mouseups while dragging
                 var handler = {
-                    clicked: function (e) {
+                    clicked: function(e) {
                         var pos = $(canvas).offset();
                         _mouseP = arbor.Point(e.pageX - pos.left, e.pageY - pos.top)
                         dragged = particleSystem.nearest(_mouseP);
@@ -108,7 +108,7 @@ var sys
 
                         return false
                     },
-                    dragged: function (e) {
+                    dragged: function(e) {
                         var pos = $(canvas).offset();
                         var s = arbor.Point(e.pageX - pos.left, e.pageY - pos.top)
 
@@ -120,7 +120,7 @@ var sys
                         return false
                     },
 
-                    dropped: function (e) {
+                    dropped: function(e) {
                         if (dragged === null || dragged.node === undefined) return
                         if (dragged.node !== null) dragged.node.fixed = false
                         dragged.node.tempMass = 1000
@@ -141,7 +141,7 @@ var sys
         return that
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         sys = arbor.ParticleSystem(1000, 600, 0.5) // create the system with sensible repulsion/stiffness/friction
         sys.parameters({ gravity: true }) // use center-gravity to make the graph settle nicely (ymmv)
         sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
@@ -154,25 +154,23 @@ var sys
         //sys.addNode('f', { alone: true, mass: .25 })
 
         sys.graft({
-             nodes:{
-             f:{alone:true, mass:.25}
-             },
-             edges:{
-                 a: {
-                     b: {
-                         name: "#a_part_of"
-                     },
-                     c: {},
-                     d:{},
-                     e: {},
-                     f: {}
-                 }  
-             }
-            })
-
-    })
-
-})(this.jQuery)
+            nodes: {
+                f: { alone: true, mass: .25 }
+            },
+            edges: {
+                a: {
+                    b: {
+                        name: "#a_part_of"
+                    },
+                    c: {},
+                    d: {},
+                    e: {},
+                    f: {}
+                }
+            }
+        })
+    });
+})(this.jQuery);
 
 var unnamedCnt = 0;
 $("#add_node").click(function () {
@@ -191,4 +189,18 @@ $("#add_edge").click(function () {
 $("#add_edge_confirm").click(function () {
     sys.addEdge($("#edge_node_1").val(), $("#edge_node_2").val(), { name: $("#edge_name").val() });
     $.fancybox.close();
+});
+
+$("#ddl_sem_network").change(function () {
+    var semNetworkId = $(this).val();
+    jQuery.ajax({
+        type: 'GET',
+        url: "/api/SemanticNetworks/" + semNetworkId,
+        success: function(data){
+        
+        },
+        error: function(data){
+            alert("Request couldn't be processed. Please try again later. the reason "+data);
+        }
+    });
 });

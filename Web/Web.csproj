@@ -146,6 +146,7 @@
       <DependentUpon>201410050803461_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\SemanticNetworkModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\arbor-tween.js" />
     <Content Include="Content\arbor.js" />
@@ -294,7 +295,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
