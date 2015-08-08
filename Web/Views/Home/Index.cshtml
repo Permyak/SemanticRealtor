@@ -18,7 +18,12 @@
                 </button>
             </div>
         </div>
-        @Html.DropDownList("ddl_sem_network", Model.SemanticNetworkListModel, new { @style = "width:200px;" })
+        @Html.DropDownList("ddl_sem_network", 
+            Model.SemanticNetworkListModel, 
+            new { @style = "width:200px;" })
+        <button type="button" class="btn btn-default btn-md" id="addSemNetwork">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
         <div class="contanier arbor">
             <canvas id="viewport"></canvas>
         </div>
@@ -39,4 +44,12 @@
     </button>
 </div>
 
+<div id="addSemNetworkDiv" style="display:none">
+    <div class="input-group">
+        <input type="text" class="form-control" id="semNetworkName" value="Новая сем сеть">
+    </div>
+    <button type="button" class="btn btn-success btn-md" id="addSemNetworkConfirm">
+        <span class="glyphicon glyphicon-plus"></span> Добавить семантическую сеть
+    </button>
+</div>
     

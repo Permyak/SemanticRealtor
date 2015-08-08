@@ -4,13 +4,13 @@
 //  A project template for using arbor.js
 //
 
-var sys
+var sys;
 
 (function($) {
 
     var Renderer = function(canvas) {
         var canvas = $(canvas).get(0)
-        var c = $(canvas)
+        var c = $(canvas);
         var parent = $(c).parent();
         var ctx = canvas.getContext("2d");
         c.attr('width', $(parent).width()); //max width
@@ -191,16 +191,42 @@ $("#add_edge_confirm").click(function () {
     $.fancybox.close();
 });
 
+$("#addSemNetwork").click(function () {
+    $.fancybox({
+        content: $('#addSemNetworkDiv'),
+        modal: true,
+        closeBtn: true,
+    });
+});
+
+$("#addSemNetworkConfirm").click(function () {
+    var semNetworkName = $("#semNetworkName").val(),
+        ddlSemNetwork = $("#ddl_sem_network");
+    ddlSemNetwork.append('<option value="' + semNetworkName + '">' + semNetworkName + '</option>');
+    ddlSemNetwork[0].selectedIndex = ddlSemNetwork[0].length - 1;
+    jQuery.ajax({
+        type: 'POST',
+        url: "/api/SemanticNetworks/",
+        success: function (data) {
+
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+    $.fancybox.close();
+});
+
 $("#ddl_sem_network").change(function () {
     var semNetworkId = $(this).val();
     jQuery.ajax({
         type: 'GET',
         url: "/api/SemanticNetworks/" + semNetworkId,
-        success: function(data){
-        
+        success: function (data) {
+
         },
-        error: function(data){
-            alert("Request couldn't be processed. Please try again later. the reason "+data);
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
         }
     });
 });
