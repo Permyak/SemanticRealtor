@@ -4,7 +4,12 @@
 @section scripts {
     @Scripts.Render("~/bundles/fancyboxjs")
     @Scripts.Render("~/bundles/arborjs")
+    @Scripts.Render("~/bundles/visjs")
 }
+@section styles {
+    @Styles.Render("~/bundles/viscss")
+}
+
 @model Web.Models.SemanticNetworkModel
     <div class="container" style="height:100%">
         <h2>Семантическая сеть</h2>
@@ -24,9 +29,23 @@
         <button type="button" class="btn btn-default btn-md" id="addSemNetwork">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
-        <div class="contanier arbor">
-            <canvas id="viewport"></canvas>
+        <div id="network-popUp">
+            <span id="operation">Вершина</span> <br>
+            <table style="margin:auto;">
+                <tr>
+                    <td>id</td>
+                    <td><input id="node-id" value="new value" /></td>
+                </tr>
+                <tr>
+                    <td>Название</td>
+                    <td><input id="node-label" value="new value" /></td>
+                </tr>
+            </table>
+            <input type="button" value="Сохранить" id="saveButton" />
+            <input type="button" value="Выход" id="cancelButton" />
         </div>
+        <br />
+        <div id="mynetwork"></div>
     </div>
 
 <div id="add_edge_div" style="display:none">

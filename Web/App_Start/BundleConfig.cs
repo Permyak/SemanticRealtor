@@ -56,6 +56,14 @@ namespace Web
                 "~/Scripts/arbor-tween.js",
                 "~/Scripts/main.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/visjs").Include(
+                "~/Scripts/vis.js",
+                "~/Scripts/main.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/viscss").Include(
+                "~/Content/vis.css",
+                "~/Content/visGraph.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/fancyboxjs").Include(
                 "~/Scripts/jquery.fancybox.js",
                 "~/Scripts/jquery.fancybox-pack.js"));
