@@ -25,7 +25,6 @@
         /// <summary>
         /// Начальная вершина дуги.
         /// </summary>
-        [Required]
         public virtual Vertex FromVertex { get; set; }
 
         /// <summary>

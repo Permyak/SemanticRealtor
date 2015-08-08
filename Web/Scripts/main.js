@@ -1,12 +1,14 @@
 ﻿$(document).ready(function () {
-    draw();
+    if ($("#ddl_sem_network").length) {
+        var semNetworkId = $("#ddl_sem_network").val();
+        draw(semNetworkId);
+    }
 });
 
 var nodes = null;
 var edges = null;
 var network = null;
-// randomly create some nodes and edges
-var data = getScaleFreeNetwork(25);
+var data = null;
 var seed = 2;
 function destroy() {
     if (network) {
@@ -14,14 +16,38 @@ function destroy() {
         network = null;
     }
 }
-function draw() {
+
+function loadSemnetworkJson(semNetworkId) {
+    var result;
+    jQuery.ajax({
+        type: 'GET',
+        async: false,
+        timeout: 30000,
+        url: "/api/SemanticNetworks/" + semNetworkId,
+        success: function (data) {
+            result = data;
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+    return result;
+}
+
+function getNetwork() {
+    
+}
+
+function draw(semNetworkId) {
     destroy();
     nodes = [];
     edges = [];
+    var semNetworkJson = loadSemnetworkJson(semNetworkId);
+    data = getGraph(semNetworkJson);
     // create a network
     var container = document.getElementById('mynetwork');
     var options = {
-        layout: { randomSeed: seed }, // just to make sure the layout is the same when the locale is changed
+        layout: { randomSeed: seed },
         locale: "ru",
         manipulation: {
             addNode: function (data, callback) {
@@ -94,53 +120,32 @@ function loadJSON(path, success, error) {
 }
 
 
-function getScaleFreeNetwork(nodeCount) {
+function getGraph(semNetworkJson) {
     var nodes = [];
     var edges = [];
-    var connectionCount = [];
 
-    // randomly create some nodes and edges
-    for (var i = 0; i < nodeCount; i++) {
-        nodes.push({
-            id: i,
-            label: String(i)
-        });
-
-        connectionCount[i] = 0;
-
-        // create edges in a scale-free-network way
-        if (i == 1) {
-            var from = i;
-            var to = 0;
-            edges.push({
-                from: from,
-                to: to
+    // Create some nodes and edges.
+    semNetworkJson.Vertices.forEach(
+        function (node) {
+            nodes.push({
+                id: node.VertexId,
+                label: node.Text
             });
-            connectionCount[from]++;
-            connectionCount[to]++;
         }
-        else if (i > 1) {
-            var conn = edges.length * 2;
-            var rand = Math.floor(Math.random() * conn);
-            var cum = 0;
-            var j = 0;
-            while (j < connectionCount.length && cum < rand) {
-                cum += connectionCount[j];
-                j++;
-            }
+    );
 
-
-            var from = i;
-            var to = j;
+    semNetworkJson.Arcs.forEach(
+        function (arc) {
             edges.push({
-                from: from,
-                to: to
+                from: arc.FromVertexId,
+                to: arc.ToVertexId,
+                label: arc.Text,
+                font: { align: 'top' },
+                arrows: 'to'
             });
-            connectionCount[from]++;
-            connectionCount[to]++;
         }
-    }
-
+    );
+    
     return { nodes: nodes, edges: edges };
 }
 
@@ -191,14 +196,5 @@ $("#addSemNetworkConfirm").click(function () {
 
 $("#ddl_sem_network").change(function () {
     var semNetworkId = $(this).val();
-    jQuery.ajax({
-        type: 'GET',
-        url: "/api/SemanticNetworks/" + semNetworkId,
-        success: function (data) {
-
-        },
-        error: function (data) {
-            alert("Request couldn't be processed. Please try again later. the reason " + data);
-        }
-    });
+    draw(semNetworkId);
 });

@@ -48,11 +48,11 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -144,6 +144,10 @@
     <Compile Include="Migrations\201410050803461_InitialCreate.cs" />
     <Compile Include="Migrations\201410050803461_InitialCreate.Designer.cs">
       <DependentUpon>201410050803461_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508082239344_RemoveRequiredFieldFromArc.cs" />
+    <Compile Include="Migrations\201508082239344_RemoveRequiredFieldFromArc.Designer.cs">
+      <DependentUpon>201508082239344_RemoveRequiredFieldFromArc.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SemanticNetworkModel.cs" />
@@ -327,6 +331,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201410050803461_InitialCreate.resx">
       <DependentUpon>201410050803461_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508082239344_RemoveRequiredFieldFromArc.resx">
+      <DependentUpon>201508082239344_RemoveRequiredFieldFromArc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -39,9 +39,9 @@
         }
 
         // POST api/<controller>
-        public void Post([FromBody]Arc arc, int semNetworkId)
+        public void Post([FromBody]Arc arc)
         {
-            var semNetwork = _context.SemanticNetworks.FirstOrDefault(x => x.SemanticNetworkId == semNetworkId);
+            var semNetwork = _context.SemanticNetworks.FirstOrDefault(x => x.SemanticNetworkId == arc.SemanticNetworkId);
             if (semNetwork == null)
             {
                 throw new Exception("Семантическои сети с таким id не существует");

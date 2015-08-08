@@ -40,9 +40,9 @@
         }
 
         // POST api/<controller>
-        public void Post([FromBody]Vertex vertex, int semNetworkId)
+        public void Post([FromBody]Vertex vertex)
         {
-            var semNetwork = _context.SemanticNetworks.FirstOrDefault(x => x.SemanticNetworkId == semNetworkId);
+            var semNetwork = _context.SemanticNetworks.FirstOrDefault(x => x.SemanticNetworkId == vertex.SemanticNetworkId);
             if (semNetwork == null)
             {
                 throw new Exception("Семантическои сети с таким id не существует");
