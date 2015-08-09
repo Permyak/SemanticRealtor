@@ -153,6 +153,17 @@ $("#addSemNetwork").unbind("click").click(function () {
     });
 });
 
+$("#editSemNetwork").unbind("click").click(function () {
+    var $ddlSemNetwork = $("#ddl_sem_network");
+    $("#semNetworkNameForEdit").val($ddlSemNetwork[0].options[$ddlSemNetwork[0].selectedIndex].text);
+
+    $.fancybox({
+        content: $('#editSemNetworkDiv'),
+        modal: true,
+        closeBtn: true,
+    });
+});
+
 $("#removeSemNetwork").unbind("click").click(function () {
     var $ddlSemNetwork = $("#ddl_sem_network"),
         semNetworkId = $ddlSemNetwork.val();
@@ -196,6 +207,30 @@ $("#addSemNetworkConfirm").unbind("click").click(function () {
             $ddlSemNetwork.append('<option value="' + semNetworkId + '">' + semNetworkName + '</option>');
             $ddlSemNetwork[0].selectedIndex = $ddlSemNetwork[0].length - 1;
             draw(semNetworkId);
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+
+    $.fancybox.close();
+});
+
+$("#editSemNetworkConfirm").unbind("click").click(function () {
+    var semNetworkName = $("#semNetworkNameForEdit").val(),
+        $ddlSemNetwork = $("#ddl_sem_network"),
+        sendData = { Name: semNetworkName },
+        semNetworkId = $ddlSemNetwork.val();
+
+    jQuery.ajax({
+        type: 'PUT',
+        url: "/api/SemanticNetworks/" + semNetworkId,
+        data: JSON.stringify(sendData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            $ddlSemNetwork[0].options[$ddlSemNetwork[0].selectedIndex].text = semNetworkName;
         },
         error: function (data) {
             alert("Request couldn't be processed. Please try again later. the reason " + data);

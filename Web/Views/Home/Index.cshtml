@@ -19,6 +19,9 @@
         <button type="button" class="btn btn-default btn-md" id="addSemNetwork">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
+        <button type="button" class="btn btn-default btn-md" id="editSemNetwork">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </button>
         <button type="button" class="btn btn-default btn-md" id="removeSemNetwork">
             <span class="glyphicon glyphicon-remove"></span>
         </button>
@@ -49,4 +52,12 @@
             <span class="glyphicon glyphicon-plus"></span> Добавить семантическую сеть
         </button>
     </div>
-    
+
+    <div id="editSemNetworkDiv" style="display:none">
+        <div class="input-group">
+            <input type="text" class="form-control" id="semNetworkNameForEdit" value="Новая сем сеть">
+        </div>
+        <button type="button" class="btn btn-success btn-md" id="editSemNetworkConfirm">
+            <span class="glyphicon glyphicon-plus"></span> Изменить семантическую сеть
+        </button>
+    </div>   
