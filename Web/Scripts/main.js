@@ -34,10 +34,6 @@ function loadSemnetworkJson(semNetworkId) {
     return result;
 }
 
-function getNetwork() {
-    
-}
-
 function draw(semNetworkId) {
     destroy();
     nodes = [];
@@ -176,21 +172,29 @@ $("#addSemNetwork").click(function () {
     });
 });
 
-$("#addSemNetworkConfirm").click(function () {
+$("#addSemNetworkConfirm").unbind("click").click(function () {
     var semNetworkName = $("#semNetworkName").val(),
-        ddlSemNetwork = $("#ddl_sem_network");
-    ddlSemNetwork.append('<option value="' + semNetworkName + '">' + semNetworkName + '</option>');
-    ddlSemNetwork[0].selectedIndex = ddlSemNetwork[0].length - 1;
+        ddlSemNetwork = $("#ddl_sem_network"),
+        sendData = { Name: semNetworkName };
+
     jQuery.ajax({
         type: 'POST',
         url: "/api/SemanticNetworks/",
+        data: JSON.stringify(sendData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
         success: function (data) {
-
+            var semNetworkId = data.SemanticNetworkId;
+            ddlSemNetwork.append('<option value="' + semNetworkId + '">' + semNetworkName + '</option>');
+            ddlSemNetwork[0].selectedIndex = ddlSemNetwork[0].length - 1;
+            draw(semNetworkId);
         },
         error: function (data) {
             alert("Request couldn't be processed. Please try again later. the reason " + data);
         }
     });
+
     $.fancybox.close();
 });
 

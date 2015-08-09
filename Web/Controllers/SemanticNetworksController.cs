@@ -31,12 +31,13 @@
         }
 
         // POST api/<controller>
-        public void Post([FromBody]SemanticNetwork semNetwork)
+        public SemanticNetwork Post([FromBody]SemanticNetwork semNetwork)
         {
             if (semNetwork != null)
             {
                 _context.SemanticNetworks.Add(semNetwork);
                 _context.SaveChanges();
+                return semNetwork;
             }
             else
             {
@@ -45,7 +46,7 @@
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]SemanticNetwork newSemNetwork)
+        public SemanticNetwork Put(int id, [FromBody]SemanticNetwork newSemNetwork)
         {
             var semNetwork = _context.SemanticNetworks.Find(id);
             if (semNetwork == null)
@@ -58,6 +59,7 @@
             semNetwork.Arcs = newSemNetwork.Arcs;
 
             _context.SaveChanges();
+            return semNetwork;
         }
 
         // DELETE api/<controller>/5
