@@ -145,26 +145,7 @@ function getGraph(semNetworkJson) {
     return { nodes: nodes, edges: edges };
 }
 
-var unnamedCnt = 0;
-$("#add_node").click(function () {
-    unnamedCnt++
-    sys.addNode('unnamed' + unnamedCnt)
-});
-
-$("#add_edge").click(function () {
-    $.fancybox({
-        content: $('#add_edge_div'),
-        modal: true,
-        closeBtn: true,
-    });
-});
-
-$("#add_edge_confirm").click(function () {
-    sys.addEdge($("#edge_node_1").val(), $("#edge_node_2").val(), { name: $("#edge_name").val() });
-    $.fancybox.close();
-});
-
-$("#addSemNetwork").click(function () {
+$("#addSemNetwork").unbind("click").click(function () {
     $.fancybox({
         content: $('#addSemNetworkDiv'),
         modal: true,
@@ -172,9 +153,35 @@ $("#addSemNetwork").click(function () {
     });
 });
 
+$("#removeSemNetwork").unbind("click").click(function () {
+    var $ddlSemNetwork = $("#ddl_sem_network"),
+        semNetworkId = $ddlSemNetwork.val();
+    jQuery.ajax({
+        type: 'DELETE',
+        async: false,
+        timeout: 30000,
+        url: "/api/SemanticNetworks/" + semNetworkId,
+        success: function () {
+            var selectedIndex = $ddlSemNetwork[0].selectedIndex;
+            $("#ddl_sem_network option[value='" + semNetworkId + "']").remove();
+            if ($ddlSemNetwork[0].length) {
+                if (!selectedIndex) {
+                    selectedIndex = selectedIndex + 2;
+                }
+
+                $ddlSemNetwork[0].selectedIndex = selectedIndex - 1;
+                draw($ddlSemNetwork.val());
+            }
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+});
+
 $("#addSemNetworkConfirm").unbind("click").click(function () {
     var semNetworkName = $("#semNetworkName").val(),
-        ddlSemNetwork = $("#ddl_sem_network"),
+        $ddlSemNetwork = $("#ddl_sem_network"),
         sendData = { Name: semNetworkName };
 
     jQuery.ajax({
@@ -186,8 +193,8 @@ $("#addSemNetworkConfirm").unbind("click").click(function () {
         async: false,
         success: function (data) {
             var semNetworkId = data.SemanticNetworkId;
-            ddlSemNetwork.append('<option value="' + semNetworkId + '">' + semNetworkName + '</option>');
-            ddlSemNetwork[0].selectedIndex = ddlSemNetwork[0].length - 1;
+            $ddlSemNetwork.append('<option value="' + semNetworkId + '">' + semNetworkName + '</option>');
+            $ddlSemNetwork[0].selectedIndex = $ddlSemNetwork[0].length - 1;
             draw(semNetworkId);
         },
         error: function (data) {
@@ -198,7 +205,7 @@ $("#addSemNetworkConfirm").unbind("click").click(function () {
     $.fancybox.close();
 });
 
-$("#ddl_sem_network").change(function () {
+$("#ddl_sem_network").unbind("change").change(function () {
     var semNetworkId = $(this).val();
     draw(semNetworkId);
 });

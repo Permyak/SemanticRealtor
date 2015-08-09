@@ -13,21 +13,14 @@
 @model Web.Models.SemanticNetworkModel
     <div class="container" style="height:100%">
         <h2>Семантическая сеть</h2>
-        <div class="container controls">
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-md" id="add_node">
-                    <span class="glyphicon glyphicon-plus"></span> Добавить вершину
-                </button>
-                <button type="button" class="btn btn-default btn-md" id="add_edge">
-                    <span class="glyphicon glyphicon-plus"></span> Добавить связь
-                </button>
-            </div>
-        </div>
         @Html.DropDownList("ddl_sem_network", 
             Model.SemanticNetworkListModel, 
             new { @style = "width:200px;" })
         <button type="button" class="btn btn-default btn-md" id="addSemNetwork">
             <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-md" id="removeSemNetwork">
+            <span class="glyphicon glyphicon-remove"></span>
         </button>
         <div id="network-popUp">
             <span id="operation">Вершина</span> <br>
@@ -48,27 +41,12 @@
         <div id="mynetwork"></div>
     </div>
 
-<div id="add_edge_div" style="display:none">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="First Node" id="edge_node_1">
+    <div id="addSemNetworkDiv" style="display:none">
+        <div class="input-group">
+            <input type="text" class="form-control" id="semNetworkName" value="Новая сем сеть">
+        </div>
+        <button type="button" class="btn btn-success btn-md" id="addSemNetworkConfirm">
+            <span class="glyphicon glyphicon-plus"></span> Добавить семантическую сеть
+        </button>
     </div>
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Second Node" id="edge_node_2">
-    </div>
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Edge" id="edge_name">
-    </div>
-    <button type="button" class="btn btn-success btn-md" id="add_edge_confirm">
-        <span class="glyphicon glyphicon-plus"></span> Добавить связь
-    </button>
-</div>
-
-<div id="addSemNetworkDiv" style="display:none">
-    <div class="input-group">
-        <input type="text" class="form-control" id="semNetworkName" value="Новая сем сеть">
-    </div>
-    <button type="button" class="btn btn-success btn-md" id="addSemNetworkConfirm">
-        <span class="glyphicon glyphicon-plus"></span> Добавить семантическую сеть
-    </button>
-</div>
     
