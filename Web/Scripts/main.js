@@ -85,7 +85,19 @@ function draw(semNetworkId) {
     };
     network = new vis.Network(container, data, options);
     $("#" + network.body.container.id).off("deleted").on("deleted", function ($network, nodes, edges) {
-        nodes.forEach(function(nodeId) {
+        edges.forEach(function (edgeId) {
+            jQuery.ajax({
+                type: 'DELETE',
+                async: false,
+                timeout: 30000,
+                url: "/api/Edges/" + edgeId,
+                error: function (data) {
+                    alert("Request couldn't be processed. Please try again later. the reason " + data);
+                }
+            });
+        });
+
+        nodes.forEach(function (nodeId) {
             jQuery.ajax({
                 type: 'DELETE',
                 async: false,
