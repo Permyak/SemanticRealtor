@@ -39,7 +39,7 @@
         }
 
         // POST api/<controller>
-        public void Post([FromBody]Arc arc)
+        public ArcView Post([FromBody]Arc arc)
         {
             var semNetwork = _context.SemanticNetworks.FirstOrDefault(x => x.SemanticNetworkId == arc.SemanticNetworkId);
             if (semNetwork == null)
@@ -49,10 +49,12 @@
             
             _context.Arcs.Add(arc);
             _context.SaveChanges();
+
+            return new ArcView(arc);
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]Arc newArc)
+        public ArcView Put(int id, [FromBody]Arc newArc)
         {
             var arc = _context.Arcs.Find(id);
             if (arc == null)
@@ -61,10 +63,11 @@
             }
 
             arc.Text = newArc.Text;
-            arc.FromVertex = newArc.FromVertex;
-            arc.ToVertex = newArc.ToVertex;
+            arc.FromVertexId = newArc.FromVertexId;
+            arc.ToVertexId = newArc.ToVertexId;
 
             _context.SaveChanges();
+            return new ArcView(arc);
         }
 
         // DELETE api/<controller>/5

@@ -65,15 +65,21 @@ function draw(semNetworkId) {
                 document.getElementById('network-popUp').style.display = 'block';
             },
             addEdge: function (data, callback) {
-                if (data.from == data.to) {
-                    var r = confirm("Вы хотите соединить вершину саму с собой?");
-                    if (r == true) {
-                        callback(data);
-                    }
-                }
-                else {
-                    callback(data);
-                }
+                // filling in the popup DOM elements
+                document.getElementById('operation').innerHTML = "Добавить ребро";
+                document.getElementById('node-label').value = "Новое ребро";
+                document.getElementById('saveButton').onclick = saveNewEdge.bind(this, data, callback);
+                document.getElementById('cancelButton').onclick = clearPopUp.bind();
+                document.getElementById('network-popUp').style.display = 'block';
+            },
+            editEdge: function (data, callback) {
+                // filling in the popup DOM elements
+                document.getElementById('operation').innerHTML = "Редактировать ребро";
+                document.getElementById('node-id').value = data.id;
+                document.getElementById('node-label').value = "Новое ребро";
+                document.getElementById('saveButton').onclick = saveChangeEdge.bind(this, data, callback);
+                document.getElementById('cancelButton').onclick = clearPopUp.bind();
+                document.getElementById('network-popUp').style.display = 'block';
             }
         }
     };
@@ -129,6 +135,71 @@ function saveNewNode(data, callback) {
 
     data.id = newNodeId;
     data.label = newNodeLabel;
+    clearPopUp();
+    callback(data);
+}
+
+function saveNewEdge(data, callback) {
+    var newNodeLabel = document.getElementById('node-label').value,
+        sendData = {
+            SemanticNetworkId: $("#ddl_sem_network").val(),
+            Text: newNodeLabel,
+            FromVertexId: data.from,
+            ToVertexId: data.to
+        },
+        newEdgeId = 0;
+
+    jQuery.ajax({
+        type: 'POST',
+        url: "/api/Edges/",
+        data: JSON.stringify(sendData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            newEdgeId = data.ArcId;
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+
+    data.id = newEdgeId;
+    data.label = newNodeLabel;
+    
+    clearPopUp();
+    callback(data);
+}
+
+function saveChangeEdge(data, callback) {
+    var newNodeLabel = document.getElementById('node-label').value,
+        sendData = {
+            SemanticNetworkId: $("#ddl_sem_network").val(),
+            Text: newNodeLabel,
+            FromVertexId: data.from,
+            ToVertexId: data.to,
+            ArcId: data.id
+        },
+        newEdgeId = 0;
+
+    jQuery.ajax({
+        type: 'PUT',
+        url: "/api/Edges/" + data.id,
+        data: JSON.stringify(sendData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            newEdgeId = data.ArcId;
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+
+    data.id = newEdgeId;
+    data.label = newNodeLabel;
+
     clearPopUp();
     callback(data);
 }
@@ -195,6 +266,7 @@ function getGraph(semNetworkJson) {
     semNetworkJson.Arcs.forEach(
         function (arc) {
             edges.push({
+                id: arc.ArcId,
                 from: arc.FromVertexId,
                 to: arc.ToVertexId,
                 label: arc.Text,
