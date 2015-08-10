@@ -51,16 +51,16 @@ function draw(semNetworkId) {
                 document.getElementById('operation').innerHTML = "Добавить вершину";
                 document.getElementById('node-id').value = data.id;
                 document.getElementById('node-label').value = data.label;
-                document.getElementById('saveButton').onclick = saveData.bind(this, data, callback);
+                document.getElementById('saveButton').onclick = saveNewNode.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = clearPopUp.bind();
                 document.getElementById('network-popUp').style.display = 'block';
             },
             editNode: function (data, callback) {
                 // filling in the popup DOM elements
-                document.getElementById('operation').innerHTML = "Изменить вершину";
+                document.getElementById('operation').innerHTML = "Редактировать вершину";
                 document.getElementById('node-id').value = data.id;
                 document.getElementById('node-label').value = data.label;
-                document.getElementById('saveButton').onclick = saveData.bind(this, data, callback);
+                document.getElementById('saveButton').onclick = saveChangeNode.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = cancelEdit.bind(this, callback);
                 document.getElementById('network-popUp').style.display = 'block';
             },
@@ -78,6 +78,19 @@ function draw(semNetworkId) {
         }
     };
     network = new vis.Network(container, data, options);
+    $("#" + network.body.container.id).off("deleted").on("deleted", function ($network, nodes, edges) {
+        nodes.forEach(function(nodeId) {
+            jQuery.ajax({
+                type: 'DELETE',
+                async: false,
+                timeout: 30000,
+                url: "/api/Nodes/" + nodeId,
+                error: function(data) {
+                    alert("Request couldn't be processed. Please try again later. the reason " + data);
+                }
+            });
+        });
+    });
 }
 function clearPopUp() {
     document.getElementById('saveButton').onclick = null;
@@ -89,6 +102,55 @@ function cancelEdit(callback) {
     callback(null);
 }
 function saveData(data, callback) {
+    data.id = document.getElementById('node-id').value;
+    data.label = document.getElementById('node-label').value;
+    clearPopUp();
+    callback(data);
+}
+
+function saveNewNode(data, callback) {
+    var sendData = { SemanticNetworkId: $("#ddl_sem_network").val(), Text: document.getElementById('node-label').value },
+        newNodeLabel = document.getElementById('node-label').value,
+        newNodeId = 0;
+    jQuery.ajax({
+        type: 'POST',
+        url: "/api/Nodes/",
+        data: JSON.stringify(sendData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            newNodeId = data.VertexId;
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+
+    data.id = newNodeId;
+    data.label = newNodeLabel;
+    clearPopUp();
+    callback(data);
+}
+
+function saveChangeNode(data, callback) {
+    var sendData = { SemanticNetworkId: $("#ddl_sem_network").val(), Text: document.getElementById('node-label').value };
+
+    jQuery.ajax({
+        type: 'PUT',
+        url: "/api/Nodes/" + data.id,
+        data: JSON.stringify(sendData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            newNodeId = data.VertexId;
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+
     data.id = document.getElementById('node-id').value;
     data.label = document.getElementById('node-label').value;
     clearPopUp();

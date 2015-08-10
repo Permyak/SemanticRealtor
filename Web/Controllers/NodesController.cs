@@ -40,7 +40,7 @@
         }
 
         // POST api/<controller>
-        public void Post([FromBody]Vertex vertex)
+        public VertexView Post([FromBody]Vertex vertex)
         {
             var semNetwork = _context.SemanticNetworks.FirstOrDefault(x => x.SemanticNetworkId == vertex.SemanticNetworkId);
             if (semNetwork == null)
@@ -50,10 +50,12 @@
 
             _context.Vertices.Add(vertex);
             _context.SaveChanges();
+
+            return new VertexView(vertex);
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]Vertex newVertex)
+        public VertexView Put(int id, [FromBody]Vertex newVertex)
         {
             var vertex = _context.Vertices.Find(id);
             if (vertex == null)
@@ -67,6 +69,8 @@
             vertex.FromArcs = newVertex.FromArcs;
 
             _context.SaveChanges();
+
+            return new VertexView(vertex);
         }
 
         // DELETE api/<controller>/5

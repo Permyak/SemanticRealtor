@@ -523,8 +523,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
       // TODO: be able to destroy the delete button
       new Hammer(deleteButton).on('tap', function (event) {
-        event.stopPropagation();
-        me.parent.removeFromDataSet(me);
+          event.stopPropagation();
+          deleteButton.trigger("deleting", me);
+          me.parent.removeFromDataSet(me);
       });
 
       anchor.appendChild(deleteButton);
@@ -39390,6 +39391,7 @@ return /******/ (function(modules) { // webpackBootstrap
           this.body.data.nodes.getDataSet().remove(selectedNodes);
           this.body.emitter.emit('startSimulation');
           this.showManipulatorToolbar();
+          $("#" + network.body.container.id).trigger("deleted", [selectedNodes, selectedEdges]);
         }
       }
     }, {

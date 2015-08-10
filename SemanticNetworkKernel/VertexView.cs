@@ -49,8 +49,15 @@
             this.IsSystem = vertex.IsSystem;
             this.Text = vertex.Text;
             this.VertexId = vertex.VertexId;
-            this.FromArcs = vertex.FromArcs.Select(t => t.ArcId);
-            this.ToArcs = vertex.ToArcs.Select(t => t.ArcId);
+            if (vertex.FromArcs != null)
+            {
+                this.FromArcs = vertex.FromArcs.Select(t => t.ArcId);
+            }
+
+            if (vertex.ToArcs != null)
+            {
+                this.ToArcs = vertex.ToArcs.Select(t => t.ArcId);
+            }
         }
     }
 }
