@@ -49,8 +49,7 @@ function draw(semNetworkId) {
             addNode: function (data, callback) {
                 // filling in the popup DOM elements
                 document.getElementById('operation').innerHTML = "Добавить вершину";
-                document.getElementById('node-id').value = data.id;
-                document.getElementById('node-label').value = data.label;
+                document.getElementById('node-label').value = "Новая вершина";
                 document.getElementById('saveButton').onclick = saveNewNode.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = clearPopUp.bind();
                 document.getElementById('network-popUp').style.display = 'block';
@@ -58,7 +57,6 @@ function draw(semNetworkId) {
             editNode: function (data, callback) {
                 // filling in the popup DOM elements
                 document.getElementById('operation').innerHTML = "Редактировать вершину";
-                document.getElementById('node-id').value = data.id;
                 document.getElementById('node-label').value = data.label;
                 document.getElementById('saveButton').onclick = saveChangeNode.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = cancelEdit.bind(this, callback);
@@ -75,7 +73,6 @@ function draw(semNetworkId) {
             editEdge: function (data, callback) {
                 // filling in the popup DOM elements
                 document.getElementById('operation').innerHTML = "Редактировать ребро";
-                document.getElementById('node-id').value = data.id;
                 document.getElementById('node-label').value = "Новое ребро";
                 document.getElementById('saveButton').onclick = saveChangeEdge.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = clearPopUp.bind();
@@ -118,12 +115,6 @@ function clearPopUp() {
 function cancelEdit(callback) {
     clearPopUp();
     callback(null);
-}
-function saveData(data, callback) {
-    data.id = document.getElementById('node-id').value;
-    data.label = document.getElementById('node-label').value;
-    clearPopUp();
-    callback(data);
 }
 
 function saveNewNode(data, callback) {
@@ -234,7 +225,6 @@ function saveChangeNode(data, callback) {
         }
     });
 
-    data.id = document.getElementById('node-id').value;
     data.label = document.getElementById('node-label').value;
     clearPopUp();
     callback(data);
