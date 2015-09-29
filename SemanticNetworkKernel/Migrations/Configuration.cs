@@ -1,4 +1,4 @@
-namespace Web.Migrations
+namespace SemanticNetworkKernel.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -10,7 +10,6 @@ namespace Web.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "SemanticNetworkKernel.SemanticNetworkContext";
         }
 
         protected override void Seed(SemanticNetworkKernel.SemanticNetworkContext context)

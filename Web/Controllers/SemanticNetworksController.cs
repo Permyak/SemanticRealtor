@@ -22,11 +22,15 @@
         public SemanticNetwork Get(int id)
         {
             var semNetwork = _context.SemanticNetworks.Find(id);
+            semNetwork.Arcs.ToArray();
+            semNetwork.Vertices.ToArray();
             if (semNetwork == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
+            //SemanticNetwork sn = new SemanticNetwork { Arcs = semNetwork.Arcs, Name = semNetwork.Name, SemanticNetworkId = semNetwork.SemanticNetworkId, Vertices = semNetwork.Vertices };
+            
             return semNetwork;
         }
 

@@ -58,11 +58,13 @@ namespace Web
 
             bundles.Add(new ScriptBundle("~/bundles/visjs").Include(
                 "~/Scripts/vis.js",
-                "~/Scripts/main.js"));
+                "~/Scripts/main.js",
+                "~/Scripts/jquery.contextmenu.js"));
 
             bundles.Add(new StyleBundle("~/bundles/viscss").Include(
                 "~/Content/vis.css",
-                "~/Content/visGraph.css"));
+                "~/Content/visGraph.css",
+                "~/Content/jquery.contextmenu.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/fancyboxjs").Include(
                 "~/Scripts/jquery.fancybox.js",

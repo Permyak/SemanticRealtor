@@ -141,15 +141,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201410050803461_InitialCreate.cs" />
-    <Compile Include="Migrations\201410050803461_InitialCreate.Designer.cs">
-      <DependentUpon>201410050803461_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508082239344_RemoveRequiredFieldFromArc.cs" />
-    <Compile Include="Migrations\201508082239344_RemoveRequiredFieldFromArc.Designer.cs">
-      <DependentUpon>201508082239344_RemoveRequiredFieldFromArc.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SemanticNetworkModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\arbor-tween.js" />
@@ -190,6 +181,7 @@
     <Content Include="Content\jquery-1.9.1.min.js" />
     <Content Include="Content\jquery-ui-1.8.24.js" />
     <Content Include="Content\jquery-ui-1.8.24.min.js" />
+    <Content Include="Content\jquery.contextmenu.css" />
     <Content Include="Content\jquery.fancybox.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -209,6 +201,7 @@
     <Content Include="Content\vis.css" />
     <Content Include="Content\visGraph.css" />
     <Content Include="Content\_references.js" />
+    <Content Include="Scripts\jquery.contextmenu.js" />
     <Content Include="Scripts\jquery.fancybox.js" />
     <Content Include="Scripts\jquery.fancybox.pack.js" />
     <Content Include="Scripts\main.js" />
@@ -327,14 +320,6 @@
       <Project>{68448c3c-d16a-4275-9d4a-3fa7583aa6b9}</Project>
       <Name>SemanticNetworkKernel</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410050803461_InitialCreate.resx">
-      <DependentUpon>201410050803461_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508082239344_RemoveRequiredFieldFromArc.resx">
-      <DependentUpon>201508082239344_RemoveRequiredFieldFromArc.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

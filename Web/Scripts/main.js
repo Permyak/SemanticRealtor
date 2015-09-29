@@ -3,6 +3,8 @@
         var semNetworkId = $("#ddl_sem_network").val();
         draw(semNetworkId);
     }
+
+    
 });
 
 var nodes = null;
@@ -35,6 +37,9 @@ function loadSemnetworkJson(semNetworkId) {
 }
 
 function draw(semNetworkId) {
+    if (!semNetworkId) {
+        return;
+    }
     destroy();
     nodes = [];
     edges = [];
@@ -45,6 +50,9 @@ function draw(semNetworkId) {
     var options = {
         layout: { randomSeed: seed },
         locale: "ru",
+        interaction: {
+            multiselect: true  
+        },
         manipulation: {
             addNode: function (data, callback) {
                 // filling in the popup DOM elements
@@ -53,6 +61,8 @@ function draw(semNetworkId) {
                 document.getElementById('saveButton').onclick = saveNewNode.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = clearPopUp.bind();
                 document.getElementById('network-popUp').style.display = 'block';
+                document.getElementById("node-label").focus();
+                document.getElementById("node-label").select();
             },
             editNode: function (data, callback) {
                 // filling in the popup DOM elements
@@ -61,6 +71,8 @@ function draw(semNetworkId) {
                 document.getElementById('saveButton').onclick = saveChangeNode.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = cancelEdit.bind(this, callback);
                 document.getElementById('network-popUp').style.display = 'block';
+                document.getElementById("node-label").focus();
+                document.getElementById("node-label").select();
             },
             addEdge: function (data, callback) {
                 // filling in the popup DOM elements
@@ -69,18 +81,26 @@ function draw(semNetworkId) {
                 document.getElementById('saveButton').onclick = saveNewEdge.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = clearPopUp.bind();
                 document.getElementById('network-popUp').style.display = 'block';
+                document.getElementById("node-label").focus();
+                document.getElementById("node-label").select();
             },
             editEdge: function (data, callback) {
                 // filling in the popup DOM elements
                 document.getElementById('operation').innerHTML = "Редактировать ребро";
-                document.getElementById('node-label').value = "Новое ребро";
+                document.getElementById('node-label').value = network.nodesHandler.body.edges[data.id].options.label;
                 document.getElementById('saveButton').onclick = saveChangeEdge.bind(this, data, callback);
                 document.getElementById('cancelButton').onclick = clearPopUp.bind();
                 document.getElementById('network-popUp').style.display = 'block';
+                document.getElementById("node-label").focus();
+                document.getElementById("node-label").select();
             }
         }
     };
+
     network = new vis.Network(container, data, options);
+    network.on("click", function (params) {
+    });
+
     $("#" + network.body.container.id).off("deleted").on("deleted", function ($network, nodes, edges) {
         edges.forEach(function (edgeId) {
             jQuery.ajax({
@@ -107,11 +127,19 @@ function draw(semNetworkId) {
         });
     });
 }
+
 function clearPopUp() {
     document.getElementById('saveButton').onclick = null;
     document.getElementById('cancelButton').onclick = null;
     document.getElementById('network-popUp').style.display = 'none';
 }
+
+function clearPopUpEdit() {
+    document.getElementById('saveButtonEdit').onclick = null;
+    document.getElementById('cancelButtonEdit').onclick = null;
+    document.getElementById('network-popUpEdit').style.display = 'none';
+}
+
 function cancelEdit(callback) {
     clearPopUp();
     callback(null);
@@ -142,6 +170,34 @@ function saveNewNode(data, callback) {
     callback(data);
 }
 
+function getEdges(semNetId) {
+    var edgesNames = [];
+    jQuery.ajax({
+        type: 'GET',
+        url: "/api/Edges/",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            var edges = data.filter(function (el) {
+                return semNetId === el.SemanticNetworkId.toString();
+            });
+            edges.forEach(function (item, i, arr) {
+                var found = edgesNames.some(function (el) {
+                    return el === item.Text ;
+                });
+                if (!found) {
+                    edgesNames.push(item.Text);
+                }
+            });
+        },
+        error: function (data) {
+            alert("Request couldn't be processed. Please try again later. the reason " + data);
+        }
+    });
+    return edgesNames.sort();
+}
+
 function saveNewEdge(data, callback) {
     var newNodeLabel = document.getElementById('node-label').value,
         sendData = {
@@ -169,6 +225,7 @@ function saveNewEdge(data, callback) {
 
     data.id = newEdgeId;
     data.label = newNodeLabel;
+    data.arrows = 'to';
     
     clearPopUp();
     callback(data);
@@ -352,6 +409,10 @@ $("#addSemNetworkConfirm").unbind("click").click(function () {
     $.fancybox.close();
 });
 
+$("#cancelAddSemNetworkConfirm").unbind("click").click(function () {
+    $.fancybox.close();
+});
+
 $("#editSemNetworkConfirm").unbind("click").click(function () {
     var semNetworkName = $("#semNetworkNameForEdit").val(),
         $ddlSemNetwork = $("#ddl_sem_network"),
@@ -373,6 +434,10 @@ $("#editSemNetworkConfirm").unbind("click").click(function () {
         }
     });
 
+    $.fancybox.close();
+});
+
+$("#cancelEditSemNetworkConfirm").unbind("click").click(function () {
     $.fancybox.close();
 });
 
